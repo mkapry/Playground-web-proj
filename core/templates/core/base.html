@@ -1,0 +1,23 @@
+<html
+<head>
+    <title>Мой сайт</title>
+</head>
+<body>
+<h1>Гольф</h1>
+
+{% block title %}Welcome{% endblock %}
+
+
+{% block content%}
+{{ user.username }}
+<table>
+    <tr>
+<a href='stats/'>My stats</a>
+    <tr>
+<a href='games/'>New game</a>
+    <tr>
+<a href="{% url 'logout' %}">Выход</a>
+    <table>
+{% endblock %}
+</body>
+</html>

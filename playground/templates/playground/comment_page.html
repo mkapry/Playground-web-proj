@@ -1,0 +1,15 @@
+{% extends "playground/base.html" %}
+{% load static %}
+
+{% block title %}{{comment.post}}{% endblock %}
+
+{% block content %}
+<div>
+    {{ comment.text}}
+</div>
+            <div>{{ comment.text }}</div>
+</div>
+
+<div><a href="{% url 'comment_update' %}">Редактировать комментарий</a></div>
+
+{% endblock %}

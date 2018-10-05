@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+
+
+{% block title %}New Game{% endblock %}
+
+
+{% block content%}
+<select name='Course'>
+    <option value='1'selected>Agalarov GC</option>
+    <option value='2'>Tseleevo GC</option>
+    #как отображать то что мы добавили через админку
+</select>
+<input type='text' name='players' required=''>
+ # как быть если надо добавить других пользователей приложения
+
+{% endblock %}

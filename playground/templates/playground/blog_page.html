@@ -1,0 +1,94 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:post="http://www.w3.org/1999/xhtml"
+      xmlns:posts="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="csrf" content="{{ csrf_token }}">
+    <!-- Le styles -->
+    <link href="{% static "bootstrap-4/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% static "chosen/chosen.min.css" %}" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            padding-top: 60px;
+            /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+    </style>
+    <title>My site</title>
+</head>
+
+<body>
+    <div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+         </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+         <ul class="navbar-nav" aria-labelledby="navbarDropdownMenuLink">
+             <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Blogs
+        </a>
+        <div class="dropdown-menu" >
+          <a class="dropdown-item" href="{% url 'blog_list' %}">Blog List</a>
+          <a class="dropdown-item" href="{% url 'blog_create' %}">Create blog</a>
+        </div>
+             </li>
+         </ul>
+            </div>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+         </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+         <ul class="navbar-nav" aria-labelledby="navbarDropdownMenuLink">
+             <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Posts
+        </a>
+        <div class="dropdown-menu" >
+          <a class="dropdown-item" href="{% url 'post_create' pk=blog.pk%}">Create Post</a>
+        </div>
+             </li>
+         </ul>
+            </div>
+                <!--/.nav-collapse -->
+
+    </div>
+{% block title %}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h1>{{blog.name}}</h1>
+    </div>
+    {% for post in object_list %}
+        <div class="col-2">
+            <div><a href="{% url 'post_page' pk=post.pk %}">{{ post.text}}</a> </div>
+            <span id="likes-{{ post.id }}">Количество лайков поста {{ post.total_likes }}</span>
+            {% if user.is_authenticated %}
+    <button class="btn ajaxlike" data-url="{% url 'likes' pk=post.id %}" data-postid="{{ post.id }}">Лайкнуть</button>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+<hr/>
+<div><a href="{% url 'blog_update' pk=blog.pk %}">Редактировать блог</a></div>
+{% endblock %}
+<footer class="footer">
+      <div class="container">
+        <span class="text-muted">lalala.</span>
+      </div>
+    </footer>
+    <!-- /container -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{% static "chosen/chosen.jquery.min.js" %}"></script>
+    <script src="{% static "bootstrap-4/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "base.js" %}"></script>
+</body>
+
+</html>

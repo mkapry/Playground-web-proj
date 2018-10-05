@@ -1,0 +1,16 @@
+{% extends "playground/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}Создание поста{% endblock %}
+
+{% block content %}
+<div>
+<form method="post">
+    {% csrf_token %}
+    {% crispy form %}
+</form>
+</div>
+
+{% endblock %}
