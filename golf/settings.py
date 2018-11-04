@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'game.apps.GameConfig',
     'playground',
     'crispy_forms',
+    'social_django',
 ]
 
 AUTH_USER_MODEL = 'core.User'
@@ -62,8 +63,9 @@ INTERNAL_IPS = '127.0.0.1',
 ROOT_URLCONF = 'golf.urls'
 
 LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'welcome'
 
-LOGOUT_REDIRECT_URL = 'login'
+#LOGOUT_REDIRECT_URL = 'login'
 
 TEMPLATES = [
     {
@@ -77,6 +79,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'playground.context_processors.overall_stats',
+                'social_django.context_processors.backends',
             ],
         },
     },
@@ -137,3 +140,12 @@ USE_TZ = True
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 STATIC_URL = '/static/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.vk.VKOAuth2',          # бекенд авторизации через ВКонтакте
+    'django.contrib.auth.backends.ModelBackend', # бекенд классической аутентификации, чтобы работала авторизация через обычный логин и пароль
+)
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = '6723074'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'PoFBXthHYBrXXRPAmDwT'
+FIXTURE_DIRS = ('/Users/Masha/proj/src/mydata.json', )

@@ -1,0 +1,26 @@
+[
+  {
+    "model":"playground.Blog",
+    "pk":1,
+    "fields":{
+      "author": "John",
+      "name": "School"
+    }
+  },
+  {
+    "model":"playground.Blog",
+    "pk":2,
+    "fields":{
+      "author": "John",
+       "name":"How I went to school."
+    }
+  },
+  {
+    "model":"playground.Blod",
+    "pk":3,
+    "fields":{
+      "author": "Jane",
+      "text":"Very nice"
+    }
+  }
+]

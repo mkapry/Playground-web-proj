@@ -10,17 +10,18 @@ class BlogCreateForm(forms.ModelForm):
 
     class Meta:
         model = Blog
-        exclude = ('author', 'created_at', 'updated_at',)
+        exclude = ( 'created_at', 'updated_at',)
+        fields = ('name', 'author')
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(BlogCreateForm, self).__init__(*args, **kwargs)
 
-    def save(self, *args, **kwargs):
-
-        self.instance.author = self.user
-        print('SAVE', self.instance.author)
-        return
+    #def save(self, *args, **kwargs):
+    #
+    #    self.instance.author = self.user
+    #    #print('SAVE', self.instance.author)
+    #    return
 
 
 class CommentCreateForm(forms.ModelForm):

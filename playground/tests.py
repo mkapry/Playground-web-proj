@@ -1,18 +1,23 @@
-from django.test import TestCase, Client
+from unittest import TestCase
+from django.test import Client
 import json
-from django.contrib.auth.models import User
-from playground.models import Blog
 
+class TestApi_get_playground(TestCase):
 
-class TestEntryList(TestCase):
     def setUp(self):
-        self.client=Client()
-        #aself.user=User.objects.create(username='test_user',  email='test_user')
-        self.blog=Blog.objects.create(name='test_blog')
-        self.response_map={
-            'name': 'test_blog',
+        self.client = Client()
+
+    def test_api_get_blog_playground(self):
+        data = {
+            "jsonrpc": "2.0",
+            "id":1,
+            "method": "playground.get_blog"
         }
+        response = self.client.post('/api/',json.dumps(data), content_type="application/json")
+        self.assertEqual(response.status_code, 200)
 
 
 
-# Create your tests here.
+
+
+

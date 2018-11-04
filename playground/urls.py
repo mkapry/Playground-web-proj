@@ -18,10 +18,12 @@ urlpatterns = [
     url(r'^postpage/(?P<pk>\d+)/$', CommentList.as_view(), name="post_page"),
     url(r'^createcomment/(?P<pk>\d+)/$', login_required(CommentCreate.as_view()), name="comment_create"),
     url(r'^createpost/(?P<pk>\d+)/$', login_required(PostCreate.as_view()), name="post_create"),
-    url(r'^welcome/', welcome),
+    #url(r'^welcome/', welcome),
     url(r'^updatepost/(?P<pk>\d+)$', login_required(PostUpdate.as_view()), name="post_update"),
     url(r'^updateblog/(?P<pk>\d+)/$', login_required(BlogUpdate.as_view()), name="blog_update"),
     url(r'^updatecomment/(?P<pk>\d+)/$', login_required(CommentUpdate.as_view()), name="comment_update"),
     url(r'^likes/(?P<pk>\d+)/$', PostLikeAjaxView.as_view(), name="likes"),
-    url(r'^search_post/$', SearchView.as_view(), name="search_post")
+    url(r'^search_post/$', SearchView.as_view(), name="search_post"),
+    url(r'^welcome/', include('social_django.urls')),
+    url(r'^welcome2/', my_view, name="welcome"),
 ]

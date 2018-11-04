@@ -1,0 +1,5 @@
+{"jsonrpc": "2.0",
+  "id":1,
+  "method": "playground.add_blog",
+  "params": {"user": "mkapry", "name" : "sport", "classif" :"fun", "id" : 1}
+}

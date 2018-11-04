@@ -1,0 +1,17 @@
+[
+  {"jsonrpc": "2.0",
+  "id":1,
+  "method": "playground.add_blog",
+  "params": {"user": "mkapry", "name" : "food", "classif" :"fun", "author": 1}
+},
+   {"jsonrpc": "2.0",
+  "id":1,
+  "method": "playground.get_blog",
+  "params": {}
+},
+{"jsonrpc": "2.0",
+  "id":1,
+  "method": "playground.upd_blog",
+  "params": {"user": "mkapry", "name" : "food23", "classif" :"fun", "author": 1, "id": 8}
+}
+]

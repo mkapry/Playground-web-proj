@@ -5,6 +5,7 @@ from jsonrpc import jsonrpc_method
 from jsonrpc.exceptions import Error
 from django.core.serializers import serialize
 import json
+from django.shortcuts import redirect, render
 
 # Create your views here.
 from django.views import View
@@ -14,6 +15,7 @@ from django.views.generic.edit import UpdateView
 # from playground.forms import BlogCreate, CommentCreate, PostCreate
 from playground.forms import PostCreateForm, SearchForm, BlogCreateForm, CommentCreateForm
 from playground.models import Blog, Comment, Post, Like
+from core.models import User
 
 
 class BlogList(ListView):
@@ -40,13 +42,19 @@ class BlogCreate(CreateView):
         name = kargs.get('name', None)
         if name is None:
             raise Error('No "name" field')
+
+        user = kargs.get('user', None)
+        if user is None:
+            raise Error('No "user" field')
+        user = User.objects.filter(username=user).first()
         form = BlogCreateForm(kargs)
-        if not form.form_valid(request, form):
-            raise Error('Not valid form')
-        blog = Blog.objects.filter(author=request.user, name=form.cleaned_data['name']).exsists()
+        print( kargs, form.is_valid() )
+        #blog = Blog.objects.filter(author=request.user, name=name).exsists()
+        blog = Blog.objects.filter(author=user, name=name).exists()
         if blog is not False:
             raise Error('The blog already exists')
         form.save()
+        print( Blog.objects.all() )
         return "success"
 
 
@@ -71,10 +79,15 @@ class CommentCreate(CreateView):
         text = kargs.get('text', None)
         if text is None:
             raise Error('No "text" field')
+
+        user = kargs.get('user', None)
+        if user is None:
+            raise Error('No "user" field')
+        user = User.objects.filter(username=user).first()
         form = CommentCreateForm(kargs)
-        if not form.form_valid(request, form):
-            raise Error('Not valid form')
-        comment = Comment.objects.filter(author=request.user,  text=form.cleaned_data['text']).exsists()
+        print(dir(form), form.is_valid())
+        # blog = Blog.objects.filter(author=request.user, name=name).exsists()
+        comment = Comment.objects.filter(author=user, text=text).exists()
         if comment is not False:
             raise Error('The comment already exists')
         form.save()
@@ -95,15 +108,19 @@ class PostCreate(CreateView):
         text = kargs.get('text', None)
         if text is None:
             raise Error('No "text" field')
+
+        user = kargs.get('user', None)
+        if user is None:
+            raise Error('No "user" field')
+        user = User.objects.filter(username=user).first()
         form = PostCreateForm(kargs)
-        if not form.form_valid(request, form):
-            raise Error('Not valid form')
-        post = Post.objects.filter(author=request.user, text=form.cleaned_data['text']).exsists()
+        print(dir(form), form.is_valid())
+        # blog = Blog.objects.filter(author=request.user, name=name).exsists()
+        post = Post.objects.filter(author=user, text=text).exists()
         if post is not False:
             raise Error('The post already exists')
         form.save()
         return "success"
-
 
 
 class PostList(ListView):
@@ -166,6 +183,27 @@ class BlogUpdate(UpdateView):
     def get_success_url(self):
         return '/'
 
+    @jsonrpc_method('playground.upd_blog')
+    def upd_blog(request, **kargs):
+        name = kargs.get('name', None)
+        if name is None:
+            raise Error('No "name" field')
+        id = kargs.get('id', None)
+        if id is None:
+            raise Error('No "id" field')
+        user = kargs.get('user', None)
+        if user is None:
+            raise Error('No "user" field')
+        user = User.objects.filter(username=user).first()
+        blog = Blog.objects.filter(id=id).exists()
+        if blog is False:
+            raise Error('The blog doesnt exist')
+        else:
+            blog = Blog.objects.filter(id=id).first()
+            form = BlogCreateForm(kargs, instance=blog)
+            form.save()
+        return "success"
+
 
 class PostUpdate(UpdateView):
     template_name = "playground/post_update.html"
@@ -213,3 +251,7 @@ class SearchView(TemplateView):
         context['form'] = SearchForm(self.request.GET)
 
         return context
+
+
+def my_view(request):
+    return render(request, 'playground/welcome.html')

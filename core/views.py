@@ -43,9 +43,6 @@ def logout_view(request):
     return redirect('%s?next=%s' % (settings.LOGOUT_REDIRECT_URL, request.template_name))
 
 
-def my_view(request):
-    if not request.user.is_authenticated():
-        return redirect('/login/')
 
 
 def signup(request):
