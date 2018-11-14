@@ -142,10 +142,16 @@ STATIC_URL = '/static/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.vk.VKOAuth2',          # бекенд авторизации через ВКонтакте
     'django.contrib.auth.backends.ModelBackend', # бекенд классической аутентификации, чтобы работала авторизация через обычный логин и пароль
 )
 
 SOCIAL_AUTH_VK_OAUTH2_KEY = '6723074'
 SOCIAL_AUTH_VK_OAUTH2_SECRET = 'PoFBXthHYBrXXRPAmDwT'
+SOCIAL_AUTH_CREATE_USERS = True
+SOCIAL_AUTH_FACEBOOK_KEY = '494536571029586'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'd37f127c5b2edba1b12ee58248661622'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 FIXTURE_DIRS = ('/Users/Masha/proj/src/mydata.json', )

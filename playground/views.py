@@ -16,6 +16,7 @@ from django.views.generic.edit import UpdateView
 from playground.forms import PostCreateForm, SearchForm, BlogCreateForm, CommentCreateForm
 from playground.models import Blog, Comment, Post, Like
 from core.models import User
+from django.contrib.auth import authenticate, login, logout
 
 
 class BlogList(ListView):
@@ -48,7 +49,7 @@ class BlogCreate(CreateView):
             raise Error('No "user" field')
         user = User.objects.filter(username=user).first()
         form = BlogCreateForm(kargs)
-        print( kargs, form.is_valid() )
+        print( kargs, form.is_valid(), form, user, User.objects.all() )
         #blog = Blog.objects.filter(author=request.user, name=name).exsists()
         blog = Blog.objects.filter(author=user, name=name).exists()
         if blog is not False:
@@ -254,4 +255,6 @@ class SearchView(TemplateView):
 
 
 def my_view(request):
+    print( request.user )
+    #logout(request)
     return render(request, 'playground/welcome.html')
